@@ -2,25 +2,34 @@ package gui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import application.ImageEditor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainMenuController {
 	
+	// Menu Bar
 	@FXML private MenuItem quitMenuItem;
 	@FXML private MenuItem openImageMenuItem;
-	@FXML private ImageView imagePanel;
+	@FXML private MenuItem openColorChannelButton;
 	
+	@FXML private ImageView imagePanel;
 	
 	// Image Properties
 	@FXML private Label imageName;
@@ -29,6 +38,11 @@ public class MainMenuController {
 	@FXML private Label imageFileSize;
 	
 	@FXML private Button toGrayScaleButton;
+	
+	// Color Channels
+	@FXML private Button showRedChannel;
+	@FXML private Button showGreenChannel;
+	@FXML private Button showBlueChannel;
 	
 	@FXML
 	public void quitProgram(ActionEvent event) {
@@ -98,4 +112,42 @@ public class MainMenuController {
 		}
 		
 	}
+	
+	/**
+	 * Opens the colour channels window, displaying the currently-loaded image
+	 * @param event
+	 */
+	public void openColorChannelWindow(ActionEvent event) {
+		
+		if (ImageEditor.getOriginalImageFile() != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("ColorMenu.FXML"));
+				Parent root1 = (Parent) loader.load();
+				Stage stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.setTitle("Colour Channels");
+				stage.setScene(new Scene(root1));
+				stage.show();
+				imagePanel.setImage(ImageEditor.getOriginalImage());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void showRedChannel(ActionEvent event) {
+		
+	}
+	
+	public void showGreenChannel(ActionEvent event) {
+		
+	}
+	
+	public void showBlueChannel(ActionEvent event) {
+		
+	}
+	
+	
 }

@@ -60,23 +60,19 @@ public class ImageEditor {
 		WritableImage processedImage = new WritableImage(
 				(int) image.getWidth(), (int) image.getHeight());
 		
-		// TODO: Add processing here
 		PixelWriter pw = processedImage.getPixelWriter();
 		PixelReader pr = image.getPixelReader();
 		
-		
 		for (int y = 0; y < image.getHeight(); y++) {
-			
 			for (int x = 0; x < image.getWidth(); x++) {
-				
 				Color pixelColor = pr.getColor(x, y);
-				pw.setColor(x, y, pixelColor.grayscale());
-				
+				pw.setColor(x, y, pixelColor.grayscale());	
 			}
-			
 		}
 		
 		grayScaleImage = processedImage;
 	}
+	
+	
 	
 }
