@@ -4,6 +4,9 @@ import java.io.File;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 
 /**
  * This class stores and processes images for displaying
@@ -49,18 +52,31 @@ public class ImageEditor {
 	// TODO: Image processing methods
 	
 	/**
-	 * Converts an image to grayscale
+	 * Converts an image to grayscale and adds it to the grayScaleImage field
 	 * @param imageToConvert - The image to convert to grayscale
 	 * @return A grayscale version of imageToConvert
 	 */
-	public static Image toGrayScale(Image imageToConvert) {
-		Image processedImage = imageToConvert;
+	public static void toGrayScale(Image image) {
+		WritableImage processedImage = new WritableImage(
+				(int) image.getWidth(), (int) image.getHeight());
 		
 		// TODO: Add processing here
+		PixelWriter pw = processedImage.getPixelWriter();
+		PixelReader pr = image.getPixelReader();
 		
-		PixelReader pr = imageToConvert.getPixelReader();
 		
-		return processedImage;
+		for (int y = 0; y < image.getHeight(); y++) {
+			
+			for (int x = 0; x < image.getWidth(); x++) {
+				
+				Color pixelColor = pr.getColor(x, y);
+				pw.setColor(x, y, pixelColor.grayscale());
+				
+			}
+			
+		}
+		
+		grayScaleImage = processedImage;
 	}
 	
 }

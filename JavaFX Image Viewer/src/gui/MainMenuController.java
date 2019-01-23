@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import application.ImageEditor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -16,16 +17,18 @@ import javafx.stage.Stage;
 
 public class MainMenuController {
 	
-	@FXML MenuItem quitMenuItem;
-	@FXML MenuItem openImageMenuItem;
-	@FXML ImageView imagePanel;
+	@FXML private MenuItem quitMenuItem;
+	@FXML private MenuItem openImageMenuItem;
+	@FXML private ImageView imagePanel;
 	
 	
 	// Image Properties
-	@FXML Label imageName;
-	@FXML Label imageDimensions;
-	@FXML Label imagePath;
-	@FXML Label imageFileSize;
+	@FXML private Label imageName;
+	@FXML private Label imageDimensions;
+	@FXML private Label imagePath;
+	@FXML private Label imageFileSize;
+	
+	@FXML private Button toGrayScaleButton;
 	
 	@FXML
 	public void quitProgram(ActionEvent event) {
@@ -47,6 +50,7 @@ public class MainMenuController {
 		// Stores and displays the image
 		ImageEditor.setOriginalImage(new Image(imageFile.toURI().toString()));
 		ImageEditor.setOriginalImageFile(imageFile);
+		ImageEditor.setGrayScaleImage(null);
 		imagePanel.setImage(ImageEditor.getOriginalImage());
 		
 		displayImageProperties();
@@ -76,5 +80,22 @@ public class MainMenuController {
 		DecimalFormat df = new DecimalFormat("#.##");
 		String fileSize = "File Size: " + df.format(megabytes) + " MB";
 		imageFileSize.setText(fileSize);
+	}
+	
+	public void toGrayScale(ActionEvent event) {
+		
+		// From gray to normal
+		if (imagePanel.getImage().equals(ImageEditor.getGrayScaleImage())) {
+			imagePanel.setImage(ImageEditor.getOriginalImage());
+		}
+		
+		// From normal to gray
+		else {
+			if (ImageEditor.getGrayScaleImage() == null) {
+				ImageEditor.toGrayScale(ImageEditor.getOriginalImage());
+			}
+			imagePanel.setImage(ImageEditor.getGrayScaleImage());
+		}
+		
 	}
 }

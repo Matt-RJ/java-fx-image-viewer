@@ -31,7 +31,7 @@
    <bottom>
       <FlowPane prefHeight="96.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Toggle Grayscale">
+            <Button fx:id="toGrayScaleBUtton" mnemonicParsing="false" onAction="#toGrayScale" text="Toggle Grayscale">
                <FlowPane.margin>
                   <Insets left="50.0" right="20.0" top="35.0" />
                </FlowPane.margin>
