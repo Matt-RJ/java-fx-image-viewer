@@ -1,35 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainMenuController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainMenuController">
    <bottom>
-      <HBox prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="70.0" prefWidth="900.0" spacing="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="showRedChannel" mnemonicParsing="false" text="RED" />
-            <Button fx:id="showGreenChannel" mnemonicParsing="false" text="GREEN" />
-            <Button fx:id="showBlueChannel" mnemonicParsing="false" text="BLUE" />
+            <VBox prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="redLabel" text="RED: 100%">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="redSlider" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" onMouseReleased="#updateColor" showTickLabels="true" showTickMarks="true" value="1.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="greenLabel" text="GREEN: 100%">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="greenSlider" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" onDragDone="#updateColor" onMouseReleased="#updateColor" showTickLabels="true" showTickMarks="true" value="1.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="blueLabel" text="BLUE: 100%">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="blueSlider" blockIncrement="0.01" majorTickUnit="0.25" max="1.0" onMouseReleased="#updateColor" showTickLabels="true" showTickMarks="true" value="1.0" />
+               </children>
+            </VBox>
          </children>
+         <padding>
+            <Insets left="50.0" />
+         </padding>
       </HBox>
    </bottom>
    <center>
-      <ImageView fx:id="imagePanel" fitHeight="250.0" fitWidth="333.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="imagePanel" fitHeight="450.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
+   <top>
+      <Label text="Drag any colour slider to display the image" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </top>
 </BorderPane>

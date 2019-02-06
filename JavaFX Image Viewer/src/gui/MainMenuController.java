@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 
 import application.ImageEditor;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,8 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
@@ -40,9 +44,14 @@ public class MainMenuController {
 	@FXML private Button toGrayScaleButton;
 	
 	// Color Channels
-	@FXML private Button showRedChannel;
-	@FXML private Button showGreenChannel;
-	@FXML private Button showBlueChannel;
+	@FXML private Label redLabel;
+	@FXML private Slider redSlider;
+	
+	@FXML private Label greenLabel;
+	@FXML private Slider greenSlider;
+	
+	@FXML private Label blueLabel;
+	@FXML private Slider blueSlider;
 	
 	@FXML
 	public void quitProgram(ActionEvent event) {
@@ -71,6 +80,9 @@ public class MainMenuController {
 		
 	}
 	
+	/**
+	 * Displays the image file properties on the main menu after opening an image
+	 */
 	public void displayImageProperties() {
 		File imageFile = ImageEditor.getOriginalImageFile();
 		Image image = ImageEditor.getOriginalImage();
@@ -96,6 +108,10 @@ public class MainMenuController {
 		imageFileSize.setText(fileSize);
 	}
 	
+	/**
+	 * Converts the currently-loaded image into grayscale and displays it
+	 * @param event
+	 */
 	public void toGrayScale(ActionEvent event) {
 		
 		// From gray to normal
@@ -125,11 +141,10 @@ public class MainMenuController {
 				Parent root1 = (Parent) loader.load();
 				Stage stage = new Stage();
 				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.initStyle(StageStyle.UNDECORATED);
 				stage.setTitle("Colour Channels");
 				stage.setScene(new Scene(root1));
 				stage.show();
-				imagePanel.setImage(ImageEditor.getOriginalImage());
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -137,17 +152,24 @@ public class MainMenuController {
 		}
 	}
 	
-	public void showRedChannel(ActionEvent event) {
+	/**
+	 * Updates the image's colour channels in the colour channel window
+	 * @param event
+	 */
+	public void updateColor(MouseEvent event) {
+		Image image = ImageEditor.getOriginalImage();
+		 
+		double r = redSlider.getValue();
+		double g = greenSlider.getValue();
+		double b = blueSlider.getValue();
 		
-	}
-	
-	public void showGreenChannel(ActionEvent event) {
+		// Updates labels
+		redLabel.setText("RED: " + Math.round(r*100) + "%");
+		greenLabel.setText("GREEN: " + Math.round(g*100) + "%");
+		blueLabel.setText("BLUE: " + Math.round(b*100) + "%");
 		
+		// Updates image
+		imagePanel.setImage(ImageEditor.multiplyColor(image,r,g,b,1));
 	}
-	
-	public void showBlueChannel(ActionEvent event) {
-		
-	}
-	
 	
 }

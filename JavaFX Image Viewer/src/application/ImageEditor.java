@@ -22,7 +22,7 @@ public class ImageEditor {
 	// The original image's file - Used to obtain properties about the image
 	private static File originalImageFile = null;
 	
-	// A grayscale version of the original image
+	// A gray scale version of the original image
 	private static Image grayScaleImage = null;
 	
 	
@@ -65,14 +65,54 @@ public class ImageEditor {
 		
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {
+				
 				Color pixelColor = pr.getColor(x, y);
-				pw.setColor(x, y, pixelColor.grayscale());	
+				
+				double pixelRed = pixelColor.getRed();
+				double pixelGreen = pixelColor.getGreen();
+				double pixelBlue = pixelColor.getBlue();
+				double pixelGray = (pixelRed + pixelGreen + pixelBlue)/3;
+				Color grayColor = new Color(pixelGray,
+											pixelGray,
+											pixelGray,pixelColor.getOpacity());
+				
+				pw.setColor(x, y, grayColor);
 			}
 		}
 		
 		grayScaleImage = processedImage;
 	}
 	
-	
-	
+	/**
+	 * Multiplies an image's RGBA values to change color intensity - 0.0 disables a color,
+	 * 1.0 leaves the color as in the original image.
+	 * @param image - The image to alter
+	 * @param r - The multiplier for red
+	 * @param g - The multiplier for green
+	 * @param b - The multiplier for blue
+	 * @param a - The multiplier for opacity
+	 * @return A color-altered version of the original image
+	 */
+	public static Image multiplyColor(Image image, double r, double g, double b, double a) {
+		WritableImage processedImage = new WritableImage(
+				(int) image.getWidth(), (int) image.getHeight());
+		
+		PixelWriter pw = processedImage.getPixelWriter();
+		PixelReader pr = image.getPixelReader();
+		
+		// Updates the colour of every pixel in the image individually
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
+				Color pixelColor = pr.getColor(x, y);
+				
+				double pixelRed = pixelColor.getRed() * r;
+				double pixelGreen = pixelColor.getGreen() * g;
+				double pixelBlue = pixelColor.getBlue() * b;
+				double pixelOpacity = pixelColor.getOpacity() * a;
+				pw.setColor(x, y, new Color(pixelRed, pixelGreen, pixelBlue, pixelOpacity));
+			}
+		}
+		
+		return processedImage;
+	}
 }
