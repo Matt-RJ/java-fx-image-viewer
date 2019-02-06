@@ -6,8 +6,6 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-// TODO: Link MainMenu to its controller properly
-
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
